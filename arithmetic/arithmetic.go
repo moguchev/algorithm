@@ -17,14 +17,14 @@ func Multiply(a, b int64) int64 {
 		if x%2 == 1 {
 			mult += y // O(n)
 		}
-		y = y << 1 // O(1) (in registers of the processor this operation needs O(1))
+		y = y << 1 // O(n)
 	}
 	// O(n) + ... + O(n) (n times) = n * O(n) = O(n^2)
 	return mult
 }
 
-// Divide - returns q, r
-// a = q*b + r
+// Divide - returns q, r (a = q*b + r)
+// T(n) = αT(n/b)+f(n) = n*T(n/2)+O(n)= O(n^2)
 func Divide(a, b int64) (q, r int64) {
 	if b == 0 {
 		panic(b)
@@ -32,7 +32,9 @@ func Divide(a, b int64) (q, r int64) {
 	if a == 0 {
 		return 0, 0
 	}
-	q, r = Divide(a/2, b)
+	// recursion depth is n=log2(a)
+	q, r = Divide(a>>1, b)
+
 	q = q << 1 // q *= 2
 	r = r << 1 // r *= 2
 	if a%2 == 1 {
@@ -42,6 +44,7 @@ func Divide(a, b int64) (q, r int64) {
 		r -= b
 		q++
 	}
+
 	return q, r
 }
 
