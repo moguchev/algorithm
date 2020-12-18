@@ -69,15 +69,12 @@ func Primality2(N int64) bool {
 
 // BreakeRSA //
 func BreakeRSA(N, e, C int64) (p, q, M int64) {
-	fmt.Println(int64(math.Sqrt(float64(N))))
 	var i int64
-	for i = 2; i <= int64(math.Sqrt(float64(N))); i++ {
+	for i = int64(math.Sqrt(float64(N))); i >= 2; i-- {
 		if N%i == 0 {
-			if Primality2(i) {
-				p = i
-				q = N / p
-				fmt.Printf("p = %d, q = %d\n", p, q)
-			}
+			p = i
+			q = N / p
+			fmt.Printf("p = %d, q = %d\n", p, q)
 		}
 	}
 
